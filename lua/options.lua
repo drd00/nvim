@@ -1,5 +1,7 @@
 vim.opt.clipboard = 'unnamedplus'	 -- use system clipboard
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'} vim.opt.mouse = 'a'	-- allow the mouse to be used in nvim
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+vim.opt.mouse = 'a'	-- allow the mouse to be used in nvim
+
 -- Tab
 vim.opt.tabstop = 4	-- number of visual spaces per TAB
 vim.opt.softtabstop = 4	-- number of spaces in tab when editing
