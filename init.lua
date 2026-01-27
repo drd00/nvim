@@ -4,5 +4,3 @@ require('plugins')
 require('colourscheme')
 require('lsp')
 
-
-

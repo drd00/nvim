@@ -15,12 +15,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
 -- Setup lazy.nvim
 require("lazy").setup({
     "rebelot/kanagawa.nvim",
@@ -94,14 +88,98 @@ require("lazy").setup({
                     -- Show documentation automatically
                     auto_show = true,
                 },
-
-                -- Signature help when tying
-                signature = { enabled = true },
             },
+
+            -- Signature help when tying
+            signature = { enabled = true },
         },
 
         opts_extend = { "sources.default" },
     },
     -- LSP manager
     { "mason-org/mason.nvim", opts = {} },
+    -- Autopair support
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true
+        -- use opts = {} for passing setup options
+        -- this is equivalent to setup({}) function
+    },
+    {
+        'nvim-telescope/telescope.nvim', version = '*',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            -- optional but recommended
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+        },
+        config = function()
+            local actions = require('telescope.actions')
+
+            require('telescope').setup({
+                defaults = {
+                    mappings = {
+                        i = {   -- Insert mode mappings
+                            ["<C-d>"] = actions.delete_buffer,
+                        },
+                        n = {   -- Normal mode mappings
+                            ["<C-d>"] = actions.delete_buffer,
+                            ["dd"] = actions.delete_buffer, -- Vim-like
+                        },
+                    },
+                    extensions = {
+                        fzf = {
+                            fuzzy = true,    -- false will only do exact matching
+                            override_generic_sorter = true, -- override the generic sorter
+                            override_file_sorter = true,    -- override the file sorter
+                            case_mode = "smart_case",   -- or "ignore_case" or "respect_case" - default is smart_case
+                        }
+                    }
+                },
+            })
+            require('telescope').load_extension('fzf')
+
+            -- Telewscope Keymaps
+            vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', opts)
+            vim.keymap.set('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', opts)
+            vim.keymap.set('n', '<leader>fb', '<cmd>Telescope buffers<cr>', opts)
+            vim.keymap.set('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', opts)
+        end
+    },
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            local harpoon = require("harpoon")
+            harpoon:setup()
+
+            -- Harpoon keybinds
+            vim.keymap.set('n', '<leader>a', function()
+                harpoon:list():add()
+            end)
+            vim.keymap.set('n', '<C-e>', function()
+                harpoon.ui:toggle_quick_menu(harpoon:list())
+            end)
+            vim.keymap.set('n', '<leader>1', function()
+                harpoon:list():select(1)
+            end)
+            vim.keymap.set('n', '<leader>2', function()
+                harpoon:list():select(2)
+            end)
+            vim.keymap.set('n', '<leader>3', function()
+                harpoon:list():select(3)
+            end)
+            vim.keymap.set('n', '<leader>4', function()
+                harpoon:list():select(4)
+            end)
+        end,
+    },
+    {
+        "tpope/vim-fugitive",
+        config = function()
+          -- Optional configuration can go here
+          vim.keymap.set('n', '<leader>gs', ':Git status<CR>', { noremap = true, silent = true })
+        end
+    }
 })

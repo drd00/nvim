@@ -7,6 +7,9 @@ local opts = {
 -----------------
 -- Normal mode --
 -----------------
+---
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 -- Hint: see `:h vim.map.set()`
 -- Better window navigation
@@ -22,6 +25,8 @@ vim.keymap.set('n', '<C-Down>', ':resize +2<CR>', opts)
 vim.keymap.set('n', '<C-Left>', ':vertical resize -2<CR>', opts)
 vim.keymap.set('n', '<C-Right>', ':vertical resize +2<CR>', opts)
 
+-- Delete the current buffer
+vim.keymap.set('n', '<leader>bd', ':bdelete<CR>', opts)
 
 -----------------
 -- Visual mode --
