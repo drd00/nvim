@@ -194,5 +194,16 @@ require("lazy").setup({
         config = function()
             vim.keymap.set('n', '<leader>e', ':Neotree toggle<CR>')
         end
+    },
+    {
+        'nvim-treesitter/nvim-treesitter',
+        lazy = false,
+        build = ':TSUpdate',
+        config = function()
+            require'nvim-treesitter'.setup {
+                install_dir = vim.fn.stdpath('data') .. '/site'
+            }
+            require'nvim-treesitter'.install{ 'go' }
+        end
     }
 })

@@ -5,9 +5,12 @@ commandExists() {
     command -v "$cmdName" 2>&1
 }
 
-install_nvim_prereqs_ubuntu() {
-    # Install build prerequisites for Ubuntu / Debian
+install_prereqs_ubuntu() {
+    # Install prerequisites for Ubuntu / Debian
     apt-get install ninja-build gettext cmake curl build-essential git
+    curl https://sh.rustup.rs -sSf | sh
+    cargo install --locked tree-sitter-cli
+    . "$HOME/.cargo/env"
 }
 
 if commandExists "nvim"; then
@@ -19,7 +22,7 @@ else
     git clone $NVIM_REPO_URL $NVIM_GIT_TARGET_DIR
 
     echo "Installing Neovim build prerequisites..."
-    install_nvim_prereqs_ubuntu
+    install_prereqs_ubuntu
 
     echo "Building Neovim from source..."
     pushd $NVIM_GIT_TARGET_DIR
