@@ -23,13 +23,9 @@ else
 
     echo "Building Neovim from source..."
     pushd $NVIM_GIT_TARGET_DIR
-    make CMAKE_BUILD_TYPE=Release
+    make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/neovim"
+    make install
+    export PATH="$HOME/neovim/bin:$PATH"
 
-    echo "Adding neovim to install directory likely to be in PATH"
-    LOCAL_INSTALL_DIR="$NVIM_GIT_TARGET_DIR/build/bin"
-    PATH_INSTALL_DIR="/usr/local/bin"
-    mkdir -p $PATH_INSTALL_DIR
-    mv $LOCAL_INSTALL_DIR/nvim $PATH_INSTALL_DIR
     popd
 fi
-
