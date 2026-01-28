@@ -20,6 +20,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
         keymap.set("n", "<space>f", function()
             vim.lsp.buf.format({ async = true })
         end, bufopts)
+        keymap.set('n', '[d', function() vim.diagnostic.goto_prev() end, opts)
+        keymap.set('n', ']d', function() vim.diagnostic.goto_next() end, opts)
     end
 })
 
