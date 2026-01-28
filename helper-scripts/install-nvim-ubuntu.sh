@@ -14,7 +14,7 @@ if commandExists "nvim"; then
     echo "nvim found"
 else
     NVIM_REPO_URL="https://github.com/neovim/neovim.git"
-    NVIM_GIT_TARGET_DIR="~/git/neovim"
+    NVIM_GIT_TARGET_DIR="$HOME/git/neovim"
     echo "Cloning Neovim to $NVIM_GIT_TARGET_DIR"
     git clone $NVIM_REPO_URL $NVIM_GIT_TARGET_DIR
 
@@ -23,7 +23,13 @@ else
 
     echo "Building Neovim from source..."
     pushd $NVIM_GIT_TARGET_DIR
-    make CMAKE_INSTALL_PREFIX=/usr/local/bin CMAKE_BUILD_TYPE=Release
+    make CMAKE_BUILD_TYPE=Release
+
+    echo "Adding neovim to install directory likely to be in PATH"
+    LOCAL_INSTALL_DIR="$NVIM_GIT_TARGET_DIR/build/bin"
+    PATH_INSTALL_DIR="/usr/local/bin"
+    mkdir -p $PATH_INSTALL_DIR
+    mv $LOCAL_INSTALL_DIR/nvim $PATH_INSTALL_DIR
     popd
 fi
 
