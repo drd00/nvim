@@ -25,5 +25,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 })
 
-vim.lsp.enable({ "ty", "gopls" })
+vim.lsp.enable({ "ty", "gopls", "clangd" })
 
