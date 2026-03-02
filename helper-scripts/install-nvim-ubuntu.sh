@@ -7,7 +7,7 @@ commandExists() {
 
 install_prereqs_ubuntu() {
     # Install prerequisites for Ubuntu / Debian
-    apt-get install ninja-build gettext cmake curl build-essential git
+    apt-get install ninja-build gettext cmake curl build-essential git nodejs npm
     curl https://sh.rustup.rs -sSf | sh
     cargo install --locked tree-sitter-cli
     . "$HOME/.cargo/env"
