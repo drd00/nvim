@@ -7,10 +7,10 @@ commandExists() {
 
 install_prereqs_ubuntu() {
     # Install prerequisites for Ubuntu / Debian
-    apt-get install ninja-build gettext cmake curl build-essential git nodejs npm
+    apt-get install ninja-build gettext cmake curl build-essential git nodejs npm ripgrep
     curl https://sh.rustup.rs -sSf | sh
-    cargo install --locked tree-sitter-cli
     . "$HOME/.cargo/env"
+    cargo install --locked tree-sitter-cli
 }
 
 if commandExists "nvim"; then
@@ -28,7 +28,10 @@ else
     pushd $NVIM_GIT_TARGET_DIR
     make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$HOME/neovim"
     make install
-    export PATH="$HOME/neovim/bin:$PATH"
+    echo 'PATH="$HOME/neovim/bin:$PATH"' >> $HOME/.bashrc
+
+    mkdir -p $HOME/.config/nvim
+    cp -r $HOME/git/nvim/* $HOME/.config/nvim/
 
     popd
 fi
