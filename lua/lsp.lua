@@ -25,5 +25,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end
 })
 
-vim.lsp.enable({ "ty", "gopls", "clangd", "rust-analyzer", "bash-language-server", "yaml-language-server" })
+vim.lsp.enable({ "ty", "gopls", "clangd", "rust-analyzer", "bash-language-server", "yaml-language-server", "ansible-language-server", "helm_ls" })
 
